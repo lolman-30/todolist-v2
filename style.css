@@ -1,0 +1,156 @@
+/* Set ukuran font dan jenis huruf */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+/* Atur warna latar belakang halaman */
+body {
+  background-color: #f0f0f0;
+}
+
+/* Atur tampilan judul */
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+/* Atur tampilan kotak tugas */
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.box {
+  background-color: #fff;
+  padding: 10px;
+  margin: 20px;
+  width: calc(33.33% - 20px);
+  border-radius: 10px;
+}
+
+.box-header {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.add-task input, .add-task button {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.delete-task {
+  float: right;
+  cursor: pointer;
+  color: red;
+}
+
+/* Atur tampilan tugas */
+.task {
+  background-color: #fff;
+  border: 2px solid #e6e6e6;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: move;
+  margin-bottom: 10px;
+  padding: 10px;
+  position: relative;
+}
+
+.task .delete-task {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 93%;
+  padding: 0.2em;
+  cursor: pointer;
+  opacity: 0.5;
+  transform: translateY(30%);
+}
+
+.task .delete-task:hover {
+  opacity: 1;
+}
+
+
+/* Atur tampilan saat tugas sedang di-drag */
+.task.dragging {
+  opacity: 0.5;
+}
+
+/* Atur warna latar belakang saat tugas sedang di-drag */
+#todo .task.dragging {
+  background-color: #e6e6ff;
+}
+
+#in-progress .task.dragging {
+  background-color: #ffffe6;
+}
+
+#finished .task.dragging {
+  background-color: #e6ffe6;
+}
+
+/* Atur tampilan input tambah tugas */
+#new-task {
+  border: none;
+  border-bottom: 2px solid #e6e6e6;
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+}
+
+/* Atur tampilan tombol tambah tugas */
+button {
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #3e8e41;
+}
+
+@media only screen and (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .box {
+    margin-bottom: 1em;
+  }
+
+  .box-header {
+    font-size: 1.5em;
+  }
+
+  .add-task {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .add-task button {
+    margin-top: 0.5em;
+  }
+
+  .task {
+    font-size: 1.2em;
+  }
+
+  .delete-task {
+    font-size: 1.2em;
+  }
+}
