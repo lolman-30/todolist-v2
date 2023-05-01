@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Daftar Tugas</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  </head>
+  <body>
+    <h1>Daftar Tugas</h1>
+    <div class="container">
+        <div class="box" id="todo-box">
+            <h2 class="box-header">
+                Todo
+                <div class="add-task">
+                    <input type="text" id="new-task">
+                    <button onclick="addTask()">Tambah Tugas</button>
+                </div>
+            </h2>
+            <div class="tasks" id="todo">
+                <div class="task" draggable="true">
+                    Belajar HTML
+                    <span class="delete-task" onclick="deleteTask(this)"><i class="fas fa-times"></i></span>
+                </div>
+                <div class="task" draggable="true">
+                    Belajar Javascript
+                    <span class="delete-task" onclick="deleteTask(this)"><i class="fas fa-times"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <h2 class="box-header">In Progress</h2>
+            <div class="tasks" id="in-progress"></div>
+        </div>
+        <div class="box">
+            <h2 class="box-header">Finished</h2>
+            <div class="tasks" id="finished"></div>
+        </div>
+    </div>
+
+    <script>
+      // Tambahkan fitur drag dan drop untuk tugas
+      var tasks = document.querySelectorAll('.task');
+
+      for (var i = 0; i < tasks.length; i++) {
+        tasks[i].addEventListener('dragstart', dragStart);
+        tasks[i].addEventListener('dragover', dragOver);
+        tasks[i].addEventListener('dragend', dragEnd);
+      }
+
+      function dragStart() {
+        this.classList.add('dragging');
+      }
+
+      function dragOver(event) {
+        event.preventDefault();
+        var dropZone = this.parentElement;
+        if (dropZone.id === 'todo') {
+          this.style.backgroundColor = '#e6e6ff';
+        } else if (dropZone.id === 'in-progress') {
+          this.style.backgroundColor = '#ffffe6';
+        } else if (dropZone.id === 'finished') {
+          this.style.backgroundColor = '#e6ffe6';
+        }
+        var tasks = document.querySelectorAll('.dragging');
+        for (var i = 0; i < tasks.length; i++) {
+            dropZone.appendChild(tasks[i]);
+        }
+
+      }
+
+      function dragEnd() {
+        this.classList.remove('dragging');
+        this.style.backgroundColor = '#fff';
+      }
+
+      // Tambahkan fitur drop untuk kotak tugas
+      var boxes = document.querySelectorAll('.box');
+      for (var i = 0; i < boxes.length; i++) {
+        boxes[i].addEventListener('dragover', allowDrop);
+        boxes[i].addEventListener('drop', drop);
+      }
+
+      function allowDrop(event) {
+        event.preventDefault();
+      }
+
+      function drop(event) {
+        event.preventDefault();
+        var task = document.querySelector('.dragging');
+        var dropZone = this;
+        dropZone.appendChild(task);
+      }
+
+      function addTask() {
+        var taskInput = document.getElementById("new-task");
+        var taskText = taskInput.value;
+        if (taskText) {
+            var task = document.createElement("div");
+            task.classList.add("task");
+            task.draggable = true;
+            task.innerText = taskText;
+    
+            var deleteTaskButton = document.createElement("span");
+            deleteTaskButton.classList.add("delete-task");
+            deleteTaskButton.innerHTML = '<i class="fas fa-times"></i>';
+            deleteTaskButton.addEventListener("click", function () {
+              deleteTask(this);
+            });
+    
+            task.appendChild(deleteTaskButton);
+    
+            task.addEventListener('dragstart', dragStart);
+            task.addEventListener('dragover', dragOver);
+            task.addEventListener('dragend', dragEnd);
+            document.getElementById("todo").appendChild(task);
+            taskInput.value = "";
+        }
+      }
+
+
+      function deleteTask(element) {
+            var task = element.parentNode;
+            task.parentNode.removeChild(task);
+      }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+  </body>
+</html>
