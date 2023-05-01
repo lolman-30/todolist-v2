@@ -45,6 +45,10 @@
         tasks[i].addEventListener('dragstart', dragStart);
         tasks[i].addEventListener('dragover', dragOver);
         tasks[i].addEventListener('dragend', dragEnd);
+        // tambahkan event listener untuk touchscreen
+        tasks[i].addEventListener('touchstart', touchStart);
+        tasks[i].addEventListener('touchmove', touchMove);
+        tasks[i].addEventListener('touchend', touchEnd);
       }
 
       function dragStart() {
@@ -72,6 +76,33 @@
         this.classList.remove('dragging');
         this.style.backgroundColor = '#fff';
       }
+
+      var currentTask = null;
+
+      function touchStart(e) {
+        currentTask = this;
+        var touch = e.touches[0];
+        var offsetX = touch.clientX - touch.target.offsetLeft;
+        var offsetY = touch.clientY - touch.target.offsetTop;
+        this.offset = { x: offsetX, y: offsetY };
+        this.style.position = 'absolute';
+        this.style.left = (touch.clientX - this.offset.x) + 'px';
+        this.style.top = (touch.clientY - this.offset.y) + 'px';
+      }
+
+      function touchMove(e) {
+        var touch = e.touches[0];
+        var posX = touch.clientX - currentTask.offset.x;
+        var posY = touch.clientY - currentTask.offset.y;
+        currentTask.style.left = posX + 'px';
+        currentTask.style.top = posY + 'px';
+      }
+
+      function touchEnd() {
+        currentTask = null;
+      }
+
+
 
       // Tambahkan fitur drop untuk kotak tugas
       var boxes = document.querySelectorAll('.box');
